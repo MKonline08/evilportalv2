@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container success-page">
+        <div class="success-icon">✅</div>
+        <h1>Connection Successful</h1>
+        <p>You are now connected to the network.</p>
+        <p class="redirect-msg">Opening browser in <span id="countdown">4</span>...</p>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+    <script>
+        let count = 4;
+        const el = document.getElementById("countdown");
+        setInterval(() => {
+            count--;
+            if (el) el.textContent = count;
+            if (count <= 0) window.location.href = "https://www.google.com";
+        }, 1000);
+    </script>
+</body>
+</html>

